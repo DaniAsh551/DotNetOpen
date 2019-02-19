@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Dani (d4n1.551)</Authors>
+    <Description>A library to manage files in an organized, efficient and simple manner.</Description>
+    <PackageLicenseUrl>https://github.com/DaniAsh551/DotNetOpen/raw/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/DaniAsh551/DotNetOpen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DaniAsh551/DotNetOpen</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>DotNet, .net, netstandard, netstandard2.0, c#, csharp, vb.net</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetOpen.FileService.Abstractions\DotNetOpen.FileService.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

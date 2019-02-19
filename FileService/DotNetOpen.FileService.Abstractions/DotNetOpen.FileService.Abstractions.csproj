@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Dani (d4n1.551)</Authors>
+    <Description>DotNetOpen.FileService abstractions.</Description>
+    <PackageLicenseUrl>https://github.com/DaniAsh551/DotNetOpen/raw/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/DaniAsh551/DotNetOpen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DaniAsh551/DotNetOpen</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>DotNet, .net, netstandard, netstandard2.0, c#, csharp, vb.net, abstractions</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>
