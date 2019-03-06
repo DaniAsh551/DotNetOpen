@@ -25,13 +25,7 @@ namespace DotNetOpen.FileService
             this.FileName = fileName;
             if (File.Exists(AbsolutePath))
             {
-                using (FileStream fileStream = File.OpenRead(AbsolutePath))
-                {
-                    RawFileSize = fileStream.Length;
-                }
-                CreatedTime = File.GetCreationTime(AbsolutePath);
-                LastAccessTime = File.GetLastAccessTime(AbsolutePath);
-                LastModifiedTime = File.GetLastWriteTime(AbsolutePath);
+                SetFileInfo();
             }
             else
             {
@@ -51,13 +45,10 @@ namespace DotNetOpen.FileService
             this.Root = fileServiceConfig.RootDirectory.LastOrDefault() == seperator ? fileServiceConfig.RootDirectory.Remove(fileServiceConfig.RootDirectory.Length - 1, 1) : fileServiceConfig.RootDirectory;
             this.FileType = fileType;
             string fileName = Guid.NewGuid().ToString() + '.' + fileType;
-            RawFileSize = bytes.LongLength;
             try
             {
                 File.WriteAllBytes(AbsolutePath, bytes);
-                CreatedTime = File.GetCreationTime(AbsolutePath);
-                LastAccessTime = File.GetLastAccessTime(AbsolutePath);
-                LastModifiedTime = File.GetLastWriteTime(AbsolutePath);
+                SetFileInfo();
             }
             catch (Exception ex)
             {
@@ -79,13 +70,65 @@ namespace DotNetOpen.FileService
             this.Root = fileServiceConfig.RootDirectory.LastOrDefault() == seperator ? fileServiceConfig.RootDirectory.Remove(fileServiceConfig.RootDirectory.Length - 1, 1) : fileServiceConfig.RootDirectory;
             this.FileType = fileType;
             this.FileName = fileName;
-            RawFileSize = bytes.LongLength;
             try
             {
                 File.WriteAllBytes(AbsolutePath, bytes);
-                CreatedTime = File.GetCreationTime(AbsolutePath);
-                LastAccessTime = File.GetLastAccessTime(AbsolutePath);
-                LastModifiedTime = File.GetLastWriteTime(AbsolutePath);
+                SetFileInfo();
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException.Value) throw ex;
+            }
+
+        }
+        /// <summary>
+        /// Generate file metadata from bytes by writing it on to the FileSystem
+        /// </summary>
+        /// <param name="fileServiceConfig">>Associated File Handler's Configuration</param>
+        /// <param name="stream">The stream of the file</param>
+        /// <param name="fileType">The Extension of the file (without '.'). eg:zip</param>
+        /// <param name="throwOnException">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        public FileMetaData(IFileServiceConfig fileServiceConfig, Stream stream, string fileType, bool? throwOnException = true)
+        {
+            char seperator = Path.DirectorySeparatorChar;
+            this.Root = fileServiceConfig.RootDirectory.LastOrDefault() == seperator ? fileServiceConfig.RootDirectory.Remove(fileServiceConfig.RootDirectory.Length - 1, 1) : fileServiceConfig.RootDirectory;
+            this.FileType = fileType;
+            string fileName = Guid.NewGuid().ToString() + '.' + fileType;
+            try
+            {
+                if (File.Exists(AbsolutePath))
+                    File.Delete(AbsolutePath);
+
+                CopyFromStream(ref stream);
+                SetFileInfo();
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException.Value) throw ex;
+            }
+
+        }
+        /// <summary>
+        /// Generate file metadata from bytes by writing it on to the FileSystem
+        /// </summary>
+        /// <param name="fileServiceConfig">>Associated File Handler's Configuration</param>
+        /// <param name="stream">The stream of the file</param>
+        /// <param name="fileName">The Name of the file on the FileSystem in the Root Directory (Including extension)</param>
+        /// <param name="fileType">The Extension of the file (without '.'). eg:zip</param>
+        /// <param name="throwOnException">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        public FileMetaData(IFileServiceConfig fileServiceConfig, Stream stream, string fileName, string fileType, bool? throwOnException = true)
+        {
+            char seperator = Path.DirectorySeparatorChar;
+            this.Root = fileServiceConfig.RootDirectory.LastOrDefault() == seperator ? fileServiceConfig.RootDirectory.Remove(fileServiceConfig.RootDirectory.Length - 1, 1) : fileServiceConfig.RootDirectory;
+            this.FileType = fileType;
+            this.FileName = fileName;
+            try
+            {
+                if (File.Exists(AbsolutePath))
+                    File.Delete(AbsolutePath);
+
+                CopyFromStream(ref stream);
+                SetFileInfo();
             }
             catch (Exception ex)
             {
@@ -140,9 +183,8 @@ namespace DotNetOpen.FileService
         /// </summary>
         public double GetFileSize(FileSizeUnit fileSizeUnit = FileSizeUnit.Byte)
         {
-            //Get How many times 1024 should be multiplied by to find the divisor
-            double folds = ((int)fileSizeUnit) + 1.00;
-            double divisor = folds * 1024.00;
+            double power = ((int)fileSizeUnit);
+            double divisor = Math.Pow(1024.0d, power);
             return RawFileSize/divisor;
         }
         /// <summary>
@@ -150,5 +192,34 @@ namespace DotNetOpen.FileService
         /// </summary>
         public Stream GetStream(FileAccess fileAccess = FileAccess.Read)
             => new FileStream(AbsolutePath, FileMode.Open, fileAccess);
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public void RefreshFileInfo()
+        {
+            SetFileInfo();
+        }
+
+        /// <summary>
+        /// Gets the Information about the file from the filesystem.
+        /// </summary>
+        private void SetFileInfo()
+        {
+            CreatedTime = File.GetCreationTime(AbsolutePath);
+            LastAccessTime = File.GetLastAccessTime(AbsolutePath);
+            LastModifiedTime = File.GetLastWriteTime(AbsolutePath);
+            RawFileSize = new FileInfo(AbsolutePath).Length;
+        }
+
+        private void CopyFromStream(ref Stream stream)
+        {
+            using (var fstream = File.Open(AbsolutePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                stream.Position = 0;
+                stream.CopyTo(fstream);
+                fstream.Flush();
+            }
+        }
     }
 }

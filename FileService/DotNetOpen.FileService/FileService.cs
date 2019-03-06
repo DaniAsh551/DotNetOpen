@@ -129,12 +129,12 @@ namespace DotNetOpen.FileService
             {
                 ValidateFileSize(bytes.Length);
                 string fileName = Guid.NewGuid().ToString();
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!File.Exists(fileMetaData.AbsolutePath))
                 {
                     new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
                     File.WriteAllBytes(fileMetaData.AbsolutePath, bytes);
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                    fileMetaData.RefreshFileInfo();
                 }
 
                 return fileMetaData;
@@ -159,7 +159,7 @@ namespace DotNetOpen.FileService
                 {
                     new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
                     await Task.Factory.StartNew(() => File.WriteAllBytes(fileMetaData.AbsolutePath, bytes));
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                    fileMetaData.RefreshFileInfo();
                 }
 
                 return fileMetaData;
@@ -178,12 +178,12 @@ namespace DotNetOpen.FileService
             try
             {
                 ValidateFileSize(bytes.Length);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!fileMetaData.Exists)
                 {
                     new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
                     File.WriteAllBytes(fileMetaData.AbsolutePath, bytes);
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                    fileMetaData.RefreshFileInfo();
                 }
 
                 return fileMetaData;
@@ -207,7 +207,7 @@ namespace DotNetOpen.FileService
                 {
                     new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
                     await Task.Factory.StartNew(() => File.WriteAllBytes(fileMetaData.AbsolutePath, bytes));
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                    fileMetaData.RefreshFileInfo();
                 }
 
                 return fileMetaData;
@@ -228,15 +228,7 @@ namespace DotNetOpen.FileService
             {
                 ValidateFileSize(stream.Length);
                 string fileName = Guid.NewGuid().ToString();
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
-                if (!File.Exists(fileMetaData.AbsolutePath))
-                {
-                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
-                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
-                        stream.CopyTo(fstream);
-
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
-                }
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
 
                 return fileMetaData;
             }
@@ -255,14 +247,7 @@ namespace DotNetOpen.FileService
             {
                 ValidateFileSize(stream.Length);
                 string fileName = Guid.NewGuid().ToString();
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
-                if (!File.Exists(fileMetaData.AbsolutePath))
-                {
-                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
-                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
-                        await stream.CopyToAsync(fstream);
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
-                }
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
 
                 return fileMetaData;
             }
@@ -280,14 +265,7 @@ namespace DotNetOpen.FileService
             try
             {
                 ValidateFileSize(stream.Length);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
-                if (!fileMetaData.Exists)
-                {
-                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
-                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
-                        stream.CopyTo(fstream);
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
-                }
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
 
                 return fileMetaData;
             }
@@ -305,14 +283,7 @@ namespace DotNetOpen.FileService
             try
             {
                 ValidateFileSize(stream.Length);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
-                if (!fileMetaData.Exists)
-                {
-                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
-                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
-                        await stream.CopyToAsync(fstream);
-                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
-                }
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
 
                 return fileMetaData;
             }
@@ -337,7 +308,7 @@ namespace DotNetOpen.FileService
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 File.WriteAllBytes(absolutePath, bytes);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -357,7 +328,7 @@ namespace DotNetOpen.FileService
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 await Task.Factory.StartNew(() => File.WriteAllBytes(absolutePath, bytes));
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -379,7 +350,7 @@ namespace DotNetOpen.FileService
                 Delete(fileName, fileType, throwOnException, true);
                 using (var fstream = new FileStream(absolutePath, FileMode.Open, FileAccess.Write))
                     stream.CopyTo(fstream);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -400,7 +371,7 @@ namespace DotNetOpen.FileService
                 Delete(fileName, fileType, throwOnException, true);
                 using (var fstream = new FileStream(absolutePath, FileMode.Open, FileAccess.Write))
                     await stream.CopyToAsync(fstream);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 return fileMetaData;
             }
             catch (Exception ex)

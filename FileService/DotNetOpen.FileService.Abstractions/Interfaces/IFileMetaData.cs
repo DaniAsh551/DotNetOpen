@@ -57,5 +57,9 @@ namespace DotNetOpen.FileService
         /// <param name="fileAccess">Whether the file should be opened in RO or WO or RW mode;</param>
         /// <returns>The data from file in the form of a Stream.</returns>
         Stream GetStream(FileAccess fileAccess = FileAccess.Read);
+        /// <summary>
+        /// Refreshes the file information from the storage.
+        /// </summary>
+        void RefreshFileInfo();
     }
 }
