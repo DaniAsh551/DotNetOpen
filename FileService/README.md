@@ -29,12 +29,11 @@ A library to manage files in an organized, efficient and simple manner.
   ```
   
   <p>Now, imagining that you have a zip file in a stream named 'stream' in order to save a stream into a file</p>
-  ```javascript
+```cs
     var fileMetaData = await fileService.CreateAsync("thefile.zip", "zip", stream);
-  ```
+```
   <p>This gives you a variable of type 'IFileMetaData' which contains the basic information of the file which we just saved.</p>
   <p>Now imaginig that you want to get the data of the newly created file into a stream named 'strm'</p>
-  ```javascript
+```cs
     var metaData = fileService.GetFile("thefile.zip", "zip");
-  ```
-  
+```
