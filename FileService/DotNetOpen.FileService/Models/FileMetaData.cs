@@ -1,9 +1,9 @@
-﻿using Dani551.Open.FileService.Configuration;
+﻿using DotNetOpen.FileService.Configuration;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace Dani551.Open.FileService
+namespace DotNetOpen.FileService
 {
     /// <summary>
     /// <inheritdoc />

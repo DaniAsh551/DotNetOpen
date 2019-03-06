@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Dani551.Open.FileService;
+using DotNetOpen.FileService;
+using DotNetOpen.FileService.Configuration;
 
-namespace Dani551.Open.FileService
+namespace DotNetOpen.FileService
 {
     /// <summary>
     /// <inheritdoc />
@@ -27,8 +28,9 @@ namespace Dani551.Open.FileService
             if (_fileServiceConfig == null) throw new ArgumentNullException(nameof(_fileServiceConfig), "File Service configuration was not supplied");
             else if(!_fileServiceConfig.IsValid()) throw new ArgumentException(nameof(_fileServiceConfig), "File Service configuration is not valid");
         }
-        
 
+
+        #region Get
         /// <summary>
         /// <inheritdoc />
         /// </summary>
@@ -36,7 +38,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileName;
+                string absolutePath = Path.Combine(_fileServiceConfig.RootDirectory, fileName);
                 return new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException && throwOnNotFound);
             }
             catch (Exception ex)
@@ -53,7 +55,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-               return Directory.EnumerateFiles(_fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType)?.Select(x => new FileMetaData(_fileServiceConfig, x.Split(Path.DirectorySeparatorChar)?.LastOrDefault(), x.Split(Path.DirectorySeparatorChar)?.Reverse()?.Skip(1)?.FirstOrDefault(), throwOnException))?.ToArray();
+                return Directory.EnumerateFiles(_fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType)?.Select(x => new FileMetaData(_fileServiceConfig, x.Split(Path.DirectorySeparatorChar)?.LastOrDefault(), x.Split(Path.DirectorySeparatorChar)?.Reverse()?.Skip(1)?.FirstOrDefault(), throwOnException))?.ToArray();
             }
             catch (Exception ex)
             {
@@ -80,6 +82,44 @@ namespace Dani551.Open.FileService
                 return null;
             }
         }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public long GetNoOfFiles(string fileType, bool throwOnException = true, bool throwOnNotFound = true)
+        {
+            try
+            {
+                return Directory.EnumerateFileSystemEntries(_fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType, $"*.{fileType}")?.LongCount() ?? 0;
+            }
+            catch (Exception ex)
+            {
+                if (ex is FileNotFoundException && !throwOnNotFound) return 0;
+                if (throwOnException) throw ex;
+                return 0;
+            }
+        }
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+
+        public long GetNoOfFiles(bool throwOnException = true, bool throwOnNotFound = true)
+        {
+            try
+            {
+                return Directory.EnumerateFileSystemEntries(_fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar)?
+                    .Select(x => Directory.EnumerateFileSystemEntries(x).LongCount())?.Sum() ?? 0;
+            }
+            catch (Exception ex)
+            {
+                if (ex is FileNotFoundException && !throwOnNotFound) return 0;
+                if (throwOnException) throw ex;
+                return 0;
+            }
+        }
+        #endregion
+
+        #region Create
         /// <summary>
         /// <inheritdoc />
         /// </summary>
@@ -87,7 +127,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                if (bytes.Length > _fileServiceConfig.MaxUploadSize) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), bytes.Length);
+                ValidateFileSize(bytes.Length);
                 string fileName = Guid.NewGuid().ToString();
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 if (!File.Exists(fileMetaData.AbsolutePath))
@@ -96,7 +136,7 @@ namespace Dani551.Open.FileService
                     File.WriteAllBytes(fileMetaData.AbsolutePath, bytes);
                     fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 }
-                
+
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -112,7 +152,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                if (bytes.Length > _fileServiceConfig.MaxUploadSize) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), bytes.Length);
+                ValidateFileSize(bytes.Length);
                 string fileName = Guid.NewGuid().ToString();
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!File.Exists(fileMetaData.AbsolutePath))
@@ -121,7 +161,7 @@ namespace Dani551.Open.FileService
                     await Task.Factory.StartNew(() => File.WriteAllBytes(fileMetaData.AbsolutePath, bytes));
                     fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 }
-                
+
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -137,7 +177,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                if (bytes.Length > _fileServiceConfig.MaxUploadSize) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), bytes.Length);
+                ValidateFileSize(bytes.Length);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 if (!fileMetaData.Exists)
                 {
@@ -145,7 +185,7 @@ namespace Dani551.Open.FileService
                     File.WriteAllBytes(fileMetaData.AbsolutePath, bytes);
                     fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 }
-                
+
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -161,7 +201,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                if (bytes.Length > _fileServiceConfig.MaxUploadSize) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), bytes.Length);
+                ValidateFileSize(bytes.Length);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!fileMetaData.Exists)
                 {
@@ -169,7 +209,35 @@ namespace Dani551.Open.FileService
                     await Task.Factory.StartNew(() => File.WriteAllBytes(fileMetaData.AbsolutePath, bytes));
                     fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 }
-                
+
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public IFileMetaData Create(string fileType, Stream stream, bool throwOnException = true)
+        {
+            try
+            {
+                ValidateFileSize(stream.Length);
+                string fileName = Guid.NewGuid().ToString();
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                if (!File.Exists(fileMetaData.AbsolutePath))
+                {
+                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
+                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
+                        stream.CopyTo(fstream);
+
+                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                }
+
                 return fileMetaData;
             }
             catch (Exception ex)
@@ -181,12 +249,92 @@ namespace Dani551.Open.FileService
         /// <summary>
         /// <inheritdoc />
         /// </summary>
+        public async Task<IFileMetaData> CreateAsync(string fileType, Stream stream, bool throwOnException = true)
+        {
+            try
+            {
+                ValidateFileSize(stream.Length);
+                string fileName = Guid.NewGuid().ToString();
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
+                if (!File.Exists(fileMetaData.AbsolutePath))
+                {
+                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
+                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
+                        await stream.CopyToAsync(fstream);
+                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                }
+
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public IFileMetaData Create(string fileName, string fileType, Stream stream, bool throwOnException = true)
+        {
+            try
+            {
+                ValidateFileSize(stream.Length);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                if (!fileMetaData.Exists)
+                {
+                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
+                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
+                        stream.CopyTo(fstream);
+                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                }
+
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public async Task<IFileMetaData> CreateAsync(string fileName, string fileType, Stream stream, bool throwOnException = true)
+        {
+            try
+            {
+                ValidateFileSize(stream.Length);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
+                if (!fileMetaData.Exists)
+                {
+                    new FileInfo(fileMetaData.AbsolutePath).Directory.Create();
+                    using (var fstream = new FileStream(fileMetaData.AbsolutePath, FileMode.OpenOrCreate, FileAccess.Write))
+                        await stream.CopyToAsync(fstream);
+                    fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                }
+
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+        #endregion
+
+
+        #region Update
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         public IFileMetaData Update(string fileName, string fileType, byte[] bytes, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
             {
-                if (bytes.Length > _fileServiceConfig.MaxUploadSize) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), bytes.Length);
-                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar+ fileName;
+                ValidateFileSize(bytes.Length);
+                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 File.WriteAllBytes(absolutePath, bytes);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
@@ -205,10 +353,32 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                if (bytes.Length > _fileServiceConfig.MaxUploadSize) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), bytes.Length);
+                ValidateFileSize(bytes.Length);
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
-                Delete(fileName, fileType,throwOnException, true);
+                Delete(fileName, fileType, throwOnException, true);
                 await Task.Factory.StartNew(() => File.WriteAllBytes(absolutePath, bytes));
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public IFileMetaData Update(string fileName, string fileType, Stream stream, bool throwOnException = true, bool throwOnNotFound = true)
+        {
+            try
+            {
+                ValidateFileSize(stream.Length);
+                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
+                Delete(fileName, fileType, throwOnException, true);
+                using (var fstream = new FileStream(absolutePath, FileMode.Open, FileAccess.Write))
+                    stream.CopyTo(fstream);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
                 return fileMetaData;
             }
@@ -221,12 +391,37 @@ namespace Dani551.Open.FileService
         /// <summary>
         /// <inheritdoc />
         /// </summary>
+        public async Task<IFileMetaData> UpdateAsync(string fileName, string fileType, Stream stream, bool throwOnException = true, bool throwOnNotFound = true)
+        {
+            try
+            {
+                ValidateFileSize(stream.Length);
+                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
+                Delete(fileName, fileType, throwOnException, true);
+                using (var fstream = new FileStream(absolutePath, FileMode.Open, FileAccess.Write))
+                    await stream.CopyToAsync(fstream);
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, throwOnException);
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+        #endregion
+
+
+        #region Move
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary> 
         public IFileMetaData Move(string fileName, string oldFileType, string newFileType, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
             {
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + oldFileType + Path.DirectorySeparatorChar + fileName;
-                if(!File.Exists(absolutePath)) throw new FileNotFoundException($"The File \"{absolutePath}\" was not found.");
+                if (!File.Exists(absolutePath)) throw new FileNotFoundException($"The File \"{absolutePath}\" was not found.");
                 File.Move(absolutePath, _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + newFileType + Path.DirectorySeparatorChar + fileName);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, newFileType, throwOnException);
                 return fileMetaData;
@@ -242,6 +437,32 @@ namespace Dani551.Open.FileService
                 return null;
             }
         }
+
+        public async Task<IFileMetaData> MoveAsync(string fileName, string oldFileType, string newFileType, bool throwOnException = true, bool throwOnNotFound = true)
+        {
+            try
+            {
+                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + oldFileType + Path.DirectorySeparatorChar + fileName;
+                if (!File.Exists(absolutePath)) throw new FileNotFoundException($"The File \"{absolutePath}\" was not found.");
+
+                await Task.Factory.StartNew(() => File.Move(absolutePath, _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + newFileType + Path.DirectorySeparatorChar + fileName));
+                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, newFileType, throwOnException);
+                return fileMetaData;
+            }
+            catch (Exception ex)
+            {
+                if (ex is FileNotFoundException)
+                {
+                    if (throwOnNotFound) throw ex;
+                    return null;
+                }
+                if (throwOnException) throw ex;
+                return null;
+            }
+        }
+        #endregion
+
+        #region Delete
         /// <summary>
         /// <inheritdoc />
         /// </summary>
@@ -249,7 +470,7 @@ namespace Dani551.Open.FileService
         {
             try
             {
-                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar+ fileName;
+                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 if (!File.Exists(absolutePath))
                 {
                     if (throwOnNotFound) throw new FileNotFoundException($"The File \"{absolutePath}\" was not found.");
@@ -259,13 +480,54 @@ namespace Dani551.Open.FileService
             }
             catch (Exception ex)
             {
-                if(ex is FileNotFoundException)
+                if (ex is FileNotFoundException)
                 {
                     if (throwOnNotFound) throw ex;
                     return;
                 }
                 if (throwOnException) throw ex;
             }
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public async Task DeleteAsync(string fileName, string fileType, bool throwOnException = true, bool throwOnNotFound = false)
+        {
+            try
+            {
+                string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
+                if (!File.Exists(absolutePath))
+                {
+                    if (throwOnNotFound) throw new FileNotFoundException($"The File \"{absolutePath}\" was not found.");
+                    return;
+                }
+                await Task.Factory.StartNew(() => File.Delete(absolutePath));
+            }
+            catch (Exception ex)
+            {
+                if (ex is FileNotFoundException)
+                {
+                    if (throwOnNotFound) throw ex;
+                    return;
+                }
+                if (throwOnException) throw ex;
+            }
+        }
+        #endregion
+
+
+        private void ValidateFileSize(long fileLengthInBytes)
+        {
+            var maxLengthBytes = GetBytes(_fileServiceConfig.MaxUploadSize, _fileServiceConfig.FileSizeUnit);
+            if (fileLengthInBytes > maxLengthBytes) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), fileLengthInBytes);
+        }
+
+        private double GetBytes(double fileSizeLength, FileSizeUnit unit)
+        {
+            var multiplier = _fileServiceConfig.FileSizeUnit == Configuration.FileSizeUnit.Byte ? 1 : (Math.Pow(1024, (int)_fileServiceConfig.FileSizeUnit));
+            fileSizeLength = fileSizeLength * multiplier;
+            return fileSizeLength;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Dani551.Open.FileService
+namespace DotNetOpen.FileService
 {
     /// <summary>
     /// A class to help with the mime type determination of Data Streams.

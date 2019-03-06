@@ -1,4 +1,4 @@
-﻿namespace Dani551.Open.FileService.Configuration
+﻿namespace DotNetOpen.FileService.Configuration
 {
     public enum FileSizeUnit
     {

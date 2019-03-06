@@ -1,8 +1,8 @@
-﻿using Dani551.Open.FileService.Configuration;
+﻿using DotNetOpen.FileService.Configuration;
 using System;
 using System.IO;
 
-namespace Dani551.Open.FileService
+namespace DotNetOpen.FileService
 {
     public class FileServiceConfig : IFileServiceConfig
     {

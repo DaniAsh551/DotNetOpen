@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dani551.Open.FileService
+namespace DotNetOpen.FileService
 {
     public class FileSizeLimitExceedException : Exception
     {
