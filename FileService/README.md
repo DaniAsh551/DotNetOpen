@@ -17,7 +17,9 @@ A library to manage files in an organized, efficient and simple manner.
 
 # HOWTO
 <p>In order to use the functionalities provided within the library, you must create or load an instance of IFileServiceConfig</p>
-```csharp
+
+ 
+<pre><code class='language-cs'>
   var allowedExtensions = new string[] {"zip", "mp3", "png", "jpg", "gif"};
   var config = new FileServiceConfig(
     stream => "application/octet-stream", 
@@ -26,14 +28,15 @@ A library to manage files in an organized, efficient and simple manner.
     Path.Combine(Environment.CurrentDirectory, "Files"),
     allowedExtensions);
   var fileService = new FileService(config);
-  ```
-  
+</code></pre>
+
   <p>Now, imagining that you have a zip file in a stream named 'stream' in order to save a stream into a file</p>
-```cs
-    var fileMetaData = await fileService.CreateAsync("thefile.zip", "zip", stream);
-```
+<pre><code class='language-cs'>
+  var fileMetaData = await fileService.CreateAsync("thefile.zip", "zip", stream);
+</code></pre>
+
   <p>This gives you a variable of type 'IFileMetaData' which contains the basic information of the file which we just saved.</p>
-  <p>Now imaginig that you want to get the data of the newly created file into a stream named 'strm'</p>
-```cs
-    var metaData = fileService.GetFile("thefile.zip", "zip");
-```
+  <p>Now imagining that you want to get the data of the newly created file into a stream named 'strm'</p>
+<pre><code class='language-cs'>
+  var metaData = fileService.GetFile("thefile.zip", "zip");
+</code></pre>
