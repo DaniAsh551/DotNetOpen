@@ -4,6 +4,37 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Version>3.0.0</Version>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+    <PackageLicenseUrl>https://github.com/DaniAsh551/DotNetOpen/raw/master/LICENSE</PackageLicenseUrl>
+
+    <PackageProjectUrl>https://github.com/DaniAsh551/DotNetOpen</PackageProjectUrl>
+
+    <RepositoryUrl>https://github.com/DaniAsh551/DotNetOpen</RepositoryUrl>
+
+    <RepositoryType>Git</RepositoryType>
+
+    <PackageTags>DotNet, .net, netstandard, netstandard2.0, c#, csharp, vb.net, file, file-management, file-service, test</PackageTags>
+
+    <PackageReleaseNotes>Changelog v1.0.1
+- Added new async methods
+- Fixed FileSizeUnit calculation bug
+- Create and Update now supports Streams
+
+Changelog v2.0.0
+- Fixed critical namespace issues
+- Fixed unnecessary exception throwing
+
+Changelog v3.0.0
+- Fixed some more filesize related bugs
+- Added rules, now custom rules for file acception can be added in the config</PackageReleaseNotes>
+
+    <Description>Tests for DotNetOpen.FileService.</Description>
   </PropertyGroup>
 
   <ItemGroup>

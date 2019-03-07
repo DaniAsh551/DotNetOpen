@@ -34,5 +34,9 @@ namespace DotNetOpen.FileService
         /// </summary>
         /// <returns>Whether this IFileServiceConfig is valid.</returns>
         bool IsValid();
+        /// <summary>
+        /// The rules container for this configuration.
+        /// </summary>
+        IRuleContainer Rules { get; }
     }
 }

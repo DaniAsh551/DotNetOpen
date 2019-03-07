@@ -99,8 +99,7 @@ namespace DotNetOpen.FileService
                 if (File.Exists(AbsolutePath))
                     File.Delete(AbsolutePath);
 
-                CopyFromStream(ref stream);
-                SetFileInfo();
+                Init(ref stream);
             }
             catch (Exception ex)
             {
@@ -126,9 +125,8 @@ namespace DotNetOpen.FileService
             {
                 if (File.Exists(AbsolutePath))
                     File.Delete(AbsolutePath);
-
-                CopyFromStream(ref stream);
-                SetFileInfo();
+                
+                Init(ref stream);
             }
             catch (Exception ex)
             {
@@ -212,14 +210,20 @@ namespace DotNetOpen.FileService
             RawFileSize = new FileInfo(AbsolutePath).Length;
         }
 
-        private void CopyFromStream(ref Stream stream)
+        private void Init(ref Stream stream)
         {
+            var subDir = Path.Combine(Root, FileType);
+            if (!Directory.Exists(subDir))
+                Directory.CreateDirectory(subDir);
+
             using (var fstream = File.Open(AbsolutePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 stream.Position = 0;
                 stream.CopyTo(fstream);
                 fstream.Flush();
             }
+
+            SetFileInfo();
         }
     }
 }

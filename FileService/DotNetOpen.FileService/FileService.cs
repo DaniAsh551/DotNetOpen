@@ -127,7 +127,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(bytes.Length);
+                ValidateRules(_fileServiceConfig, bytes, fileType);
                 string fileName = Guid.NewGuid().ToString();
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!File.Exists(fileMetaData.AbsolutePath))
@@ -152,7 +152,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(bytes.Length);
+                ValidateRules(_fileServiceConfig, bytes, fileType);
                 string fileName = Guid.NewGuid().ToString();
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!File.Exists(fileMetaData.AbsolutePath))
@@ -177,7 +177,8 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(bytes.Length);
+                ValidateRules(_fileServiceConfig, bytes, fileType, fileName);
+                var extension = Path.GetExtension(fileName);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!fileMetaData.Exists)
                 {
@@ -201,7 +202,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(bytes.Length);
+                ValidateRules(_fileServiceConfig, bytes, fileType, fileName);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, fileName, fileType, false);
                 if (!fileMetaData.Exists)
                 {
@@ -226,7 +227,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(stream.Length);
+                ValidateRules(_fileServiceConfig, stream, fileType);
                 string fileName = Guid.NewGuid().ToString();
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
 
@@ -245,9 +246,9 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(stream.Length);
+                ValidateRules(_fileServiceConfig, stream, fileType);
                 string fileName = Guid.NewGuid().ToString();
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
+                IFileMetaData fileMetaData = await Task.Factory.StartNew(() => new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false));
 
                 return fileMetaData;
             }
@@ -264,7 +265,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(stream.Length);
+                ValidateRules(_fileServiceConfig, stream, fileType, fileName);
                 IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
 
                 return fileMetaData;
@@ -282,8 +283,8 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(stream.Length);
-                IFileMetaData fileMetaData = new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false);
+                ValidateRules(_fileServiceConfig, stream, fileType, fileName);
+                IFileMetaData fileMetaData = await Task.Factory.StartNew(() => new FileMetaData(_fileServiceConfig, stream, fileName, fileType, false));
 
                 return fileMetaData;
             }
@@ -304,7 +305,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(bytes.Length);
+                ValidateRules(_fileServiceConfig, bytes, fileType, fileName);
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 File.WriteAllBytes(absolutePath, bytes);
@@ -324,7 +325,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(bytes.Length);
+                ValidateRules(_fileServiceConfig, bytes, fileType, fileName);
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 await Task.Factory.StartNew(() => File.WriteAllBytes(absolutePath, bytes));
@@ -345,7 +346,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(stream.Length);
+                ValidateRules(_fileServiceConfig, stream, fileType, fileName);
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 using (var fstream = new FileStream(absolutePath, FileMode.Open, FileAccess.Write))
@@ -366,7 +367,7 @@ namespace DotNetOpen.FileService
         {
             try
             {
-                ValidateFileSize(stream.Length);
+                ValidateRules(_fileServiceConfig, stream, fileType, fileName);
                 string absolutePath = _fileServiceConfig.RootDirectory + Path.DirectorySeparatorChar + fileType + Path.DirectorySeparatorChar + fileName;
                 Delete(fileName, fileType, throwOnException, true);
                 using (var fstream = new FileStream(absolutePath, FileMode.Open, FileAccess.Write))
@@ -488,17 +489,14 @@ namespace DotNetOpen.FileService
         #endregion
 
 
-        private void ValidateFileSize(long fileLengthInBytes)
+        private void ValidateRules(IFileServiceConfig fileServiceConfig, Stream inputStream, string fileType, string fileName = null)
         {
-            var maxLengthBytes = GetBytes(_fileServiceConfig.MaxUploadSize, _fileServiceConfig.FileSizeUnit);
-            if (fileLengthInBytes > maxLengthBytes) throw new FileSizeLimitExceedException(Convert.ToInt64(_fileServiceConfig.MaxUploadSize), fileLengthInBytes);
+            fileServiceConfig?.Rules?.ExecuteAllRules(fileServiceConfig, inputStream, fileType, fileName);
         }
 
-        private double GetBytes(double fileSizeLength, FileSizeUnit unit)
+        private void ValidateRules(IFileServiceConfig fileServiceConfig, byte[] inputBytes, string fileType, string fileName = null)
         {
-            var multiplier = _fileServiceConfig.FileSizeUnit == Configuration.FileSizeUnit.Byte ? 1 : (Math.Pow(1024, (int)_fileServiceConfig.FileSizeUnit));
-            fileSizeLength = fileSizeLength * multiplier;
-            return fileSizeLength;
+            fileServiceConfig?.Rules?.ExecuteAllRules(fileServiceConfig, inputBytes, fileType, fileName);
         }
     }
 }
