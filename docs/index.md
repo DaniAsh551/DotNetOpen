@@ -6,5 +6,5 @@ A collection of .Net standard projects which makes life easier.
 <i>All detailed documentations can be found in the docs directory.</i>
 
 ## What We have so far:
-* [FileService](/docs/DotNetOpen.FileService.md)
-* [SmsService](/docs/DotNetOpen.SmsService.md)
+* [FileService](DotNetOpen.FileService.md)
+* [SmsService](DotNetOpen.SmsService.md)
