@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DotNetOpen.Services.SmsService.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="F:DotNetOpen.Services.SmsService.RequestContentType.URL">
+            <summary>
+            All parameters are sent as a query in the URL
+            </summary>
+        </member>
+        <member name="F:DotNetOpen.Services.SmsService.RequestContentType.FormData">
+            <summary>
+            Parameters are sent as form data in the request body (Incompatible with HttpGet)
+            </summary>
+        </member>
+        <member name="F:DotNetOpen.Services.SmsService.RequestContentType.JSON">
+            <summary>
+            Parameters are sent as JSON in the request body (Incompatible with HttpGet)
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.IBulkSms">
+            <summary>
+            SMS to be sent to multiple Recepients
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.IBulkSms.Recepients">
+            <summary>
+            The recepients of the SMS
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.IBulkSms.Message">
+            <summary>
+            The Contents of the SMS
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.IBulkSms.IsValid(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <summary>
+            Gets whether the SMS is in acccordance with the smsServiceConfig
+            </summary>
+            <param name="smsServiceConfig">The configuration to be used within the SMS Service</param>
+            <returns>Whether the SMS is valid</returns>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.ISms">
+            <summary>
+            SMS to be sent
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISms.Recepient">
+            <summary>
+            The recepient of the SMS
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISms.Message">
+            <summary>
+            The Contents of the SMS
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.ISms.IsValid(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <summary>
+            Gets whether the SMS is in acccordance with the smsServiceConfig
+            </summary>
+            <returns>Whether the SMS is valid</returns>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.ISmsService">
+            <summary>
+            Service for sending SMS
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.ISmsService.SendSms(DotNetOpen.Services.SmsService.ISms)">
+            <summary>
+            Send an SMS
+            </summary>
+            <param name="sms">SMS to be sent</param>
+            <returns>Whether SMS was sent successfully</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.ISmsService.SendSmsAsync(DotNetOpen.Services.SmsService.ISms)">
+            <summary>
+            Send an SMS
+            </summary>
+            <param name="sms">SMS to be sent</param>
+            <returns>Whether SMS was sent successfully</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.ISmsService.SendBulkSms(DotNetOpen.Services.SmsService.IBulkSms)">
+            <summary>
+            Send SMS to multiple recepients
+            </summary>
+            <param name="bulkSms">Bulk SMS to be sent</param>
+            <returns>Receipients whose SMS were sent successfully</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.ISmsService.SendBulkSmsAsync(DotNetOpen.Services.SmsService.IBulkSms)">
+            <summary>
+            Send SMS to multiple recepients
+            </summary>
+            <param name="bulkSms">Bulk SMS to be sent</param>
+            <returns>Receipients whose SMS were sent successfully</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.ISmsService.SetConfig(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <summary>
+            Set the SmsService Config
+            </summary>
+            <param name="smsServiceConfig">The configuration relevant to the SMS provider</param>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.ISmsServiceConfig">
+            <summary>
+            The configuration to be used within the SMS Service
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.BaseUrl">
+            <summary>
+            The Url to call upon SMS send
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.RequestContentType">
+            <summary>
+            Defines how the data should be sent
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.RequestMethod">
+            <summary>
+            The Http Method 
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.Encoding">
+            <summary>
+            The encoding for messages
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.RequestParameters">
+            <summary>
+            The parameters to include in the SMS request
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.CharacterLimit">
+            <summary>
+            Character limit for each SMS. Keep null for unlimited.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.UserName">
+            <summary>
+            The Username or Id required for the server authentication
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.Password">
+            <summary>
+            The password required for the server authentication
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.RecepientMask">
+            <summary>
+            The keyword which the server uses for 'Recepient' or 'Target' or 'To'
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.ISmsServiceConfig.MessageMask">
+            <summary>
+            The keyword which the server uses for SMS body
+            </summary>
+        </member>
+    </members>
+</doc>

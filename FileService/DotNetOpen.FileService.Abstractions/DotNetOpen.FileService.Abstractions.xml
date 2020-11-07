@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DotNetOpen.FileService.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:DotNetOpen.FileService.InvalidRuleException">
+            <summary>
+            Exception thrown when an invalid rule is attempted.
+            </summary>
+        </member>
+        <member name="F:DotNetOpen.FileService.InvalidRuleException.RuleType">
+            <summary>
+            The invalid rule.
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.FileService.MimeTypeHelper">
+            <summary>
+            A class to help with the mime type determination of Data Streams.
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.FileService.MimeTypeHelper.GetMimeTypeDelegate">
+            <summary>
+            A function which provides MimeType given the Data stream.
+            </summary>
+            <param name="stream">Data stream.</param>
+            <returns>The MIME type of the data within the stream.</returns>
+        </member>
+        <member name="T:DotNetOpen.FileService.IFileMetaData">
+            <summary>
+            Metadata for a File on the FileSystem.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.Exists">
+            <summary>
+            Indicates whether the File Exists on the FileSystem.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.RawFileSize">
+            <summary>
+            Raw File Size in Bytes.
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileMetaData.GetFileSize(DotNetOpen.FileService.Configuration.FileSizeUnit)">
+            <summary>
+            File Size in a desired Unit.
+            </summary>
+            <param name="fileSizeUnit">The Unit for File Size calculation. Default: Byte</param>
+            <returns></returns>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.FileName">
+            <summary>
+            Get the name of the file from FileSystem.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.FileType">
+            <summary>
+            Get the type of the file.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.Root">
+            <summary>
+            Get the path of the Root Directory for File Storage.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.AbsolutePath">
+            <summary>
+            Gets the absolute complete path of the File from the FileSystem.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.CreatedTime">
+            <summary>
+            Gets the Time of creation of the file.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.LastAccessTime">
+            <summary>
+            Gets the time when the File was last accessed.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileMetaData.LastModifiedTime">
+            <summary>
+            Gets the Time when the file was last modified.
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileMetaData.GetStream(System.IO.FileAccess)">
+            <summary>
+            Gets the data from file in the form of a Stream.
+            </summary>
+            <param name="fileAccess">Whether the file should be opened in RO or WO or RW mode;</param>
+            <returns>The data from file in the form of a Stream.</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileMetaData.RefreshFileInfo">
+            <summary>
+            Refreshes the file information from the storage.
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.FileService.IFileService">
+            <summary>
+            The Handler for handling all file related IO tasks
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.GetFile(System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Get an already existing file on the FileSystem
+            </summary>
+            <param name="fileName">Name of the file</param>
+            <param name="fileType">The type of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name="throwOnNotFound">Indicates whether an Exeption should be thrown if the file is not found. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.GetAllFiles(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Get all existing files on the FileSystem by File Type
+            </summary>
+            <param name="fileType">The type of the files</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name="throwOnNotFound">Indicates whether an Exeption should be thrown if the file is not found. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.GetAllFiles(System.Boolean,System.Boolean)">
+            <summary>
+            Get all existing files on the FileSystem
+            </summary>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name="throwOnNotFound">Indicates whether an Exeption should be thrown if the file is not found. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.GetNoOfFiles(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Gets the number of files on the FileSystem.
+            </summary>
+            <param name="fileType">The type of the files</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name="throwOnNotFound">Indicates whether an Exeption should be thrown if the file is not found. Default:true</param>
+            <returns>No of files on the FileSystem.</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.GetNoOfFiles(System.Boolean,System.Boolean)">
+            <summary>
+            Gets the number of files on the FileSystem.
+            </summary>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name="throwOnNotFound">Indicates whether an Exeption should be thrown if the file is not found. Default:true</param>
+            <returns>No of files on the FileSystem.</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.CreateAsync(System.String,System.Byte[],System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem asynchronously
+            </summary>
+            <param name="fileType">The type of the file</param>
+            <param name="bytes">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Create(System.String,System.String,System.Byte[],System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem synchronously
+            </summary>
+            <param name="fileName">Name of the file</param>
+            <param name="fileType">The type of the file</param>
+            <param name="bytes">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.CreateAsync(System.String,System.String,System.Byte[],System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem asynchronously
+            </summary>
+            <param name="fileName">Name of the file</param>
+            <param name="fileType">The type of the file</param>
+            <param name="bytes">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Create(System.String,System.Byte[],System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem synchronously
+            </summary>
+            <param name="fileType">The type of the file</param>
+            <param name="bytes">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.CreateAsync(System.String,System.IO.Stream,System.Boolean)">
+            <summary>
+            Update an already existing File and Get the file from the FileSystem asynchronously
+            </summary>
+            <param name="fileName">Name of the file (with extension). Eg: file.zip</param>
+            <param name="fileType">The Type of the file</param>
+            <param name="bytes">Data to be written into the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+            <returns>IFileMetaData</returns>
+            <summary>
+            Create a new File and Get the file from the FileSystem asynchronously
+            </summary>
+            <param name="fileType">The type of the file</param>
+            <param name="bytes">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Create(System.String,System.String,System.IO.Stream,System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem synchronously
+            </summary>
+            <param name="fileName">Name of the file</param>
+            <param name="fileType">The type of the file</param>
+            <param name="stream">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.CreateAsync(System.String,System.String,System.IO.Stream,System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem asynchronously
+            </summary>
+            <param name="fileName">Name of the file</param>
+            <param name="fileType">The type of the file</param>
+            <param name="stream">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Create(System.String,System.IO.Stream,System.Boolean)">
+            <summary>
+            Create a new File and Get the file from the FileSystem synchronously
+            </summary>
+            <param name="fileType">The type of the file</param>
+            <param name="stream">The contents of the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.UpdateAsync(System.String,System.String,System.Byte[],System.Boolean,System.Boolean)">
+            <summary>
+            Update an already existing File and Get the file from the FileSystem asynchronously
+            </summary>
+            <param name="fileName">Name of the file (with extension). Eg: file.zip</param>
+            <param name="fileType">The Type of the file</param>
+            <param name="stream">Data to be written into the file</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+            <returns>IFileMetaData</returns> 
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Update(System.String,System.String,System.Byte[],System.Boolean,System.Boolean)">
+             <summary>
+             Update an already existing File and Get the file from the FileSystem synchronously
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="fileType">The Type of the file</param>
+             <param name="bytes">Data to be written into the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+             <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.UpdateAsync(System.String,System.String,System.IO.Stream,System.Boolean,System.Boolean)">
+             <summary>
+             Move a file within root
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="oldFileType">The current Type of the file</param>
+             <param name="newFileType">The new Type of the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+             <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Update(System.String,System.String,System.IO.Stream,System.Boolean,System.Boolean)">
+             <summary>
+             Update an already existing File and Get the file from the FileSystem synchronously
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="fileType">The Type of the file</param>
+             <param name="stream">Data to be written into the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+             <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Move(System.String,System.String,System.String,System.Boolean,System.Boolean)">
+             <summary>
+             Move a file within root
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="oldFileType">The current Type of the file</param>
+             <param name="newFileType">The new Type of the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+             <returns>IFileMetaData</returns> 
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.MoveAsync(System.String,System.String,System.String,System.Boolean,System.Boolean)">
+             <summary>
+             Move a file within root
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="oldFileType">The current Type of the file</param>
+             <param name="newFileType">The new Type of the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:true</param>
+             <returns>IFileMetaData</returns> 
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.Delete(System.String,System.String,System.Boolean,System.Boolean)">
+             <summary>
+             Delete a file from the FileSystem
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="fileType">Type of the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:false</param>
+             <returns>IFileMetaData</returns>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileService.DeleteAsync(System.String,System.String,System.Boolean,System.Boolean)">
+             <summary>
+             Delete a file from the FileSystem
+             </summary>
+             <param name="fileName">Name of the file</param>
+             <param name="fileType">Type of the file</param>
+             <param name="throwOnException">Indicates whether an Exception should be thrown upon errors. Default:true</param>
+            <param name = "throwOnNotFound" > Indicates whether an Exeption should be thrown if the file is not found.Default:false</param>
+             <returns>IFileMetaData</returns>
+        </member>
+        <member name="T:DotNetOpen.FileService.IFileServiceConfig">
+            <summary>
+            Configuration for File Handler
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileServiceConfig.GetMimeType">
+            <summary>
+            The mime type given the file data as a Stream.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileServiceConfig.MaxUploadSize">
+            <summary>
+            Maximum allowed upload size
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileServiceConfig.FileSizeUnit">
+            <summary>
+            Unit for Measuring file size
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileServiceConfig.RootDirectory">
+            <summary>
+            FileSystem Root directory to save files in
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileServiceConfig.AllowedExtensions">
+            <summary>
+            Allowed File Extensions (eg: zip)
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.FileService.IFileServiceConfig.IsValid">
+            <summary>
+            Determines whether this IFileServiceConfig is valid.
+            </summary>
+            <returns>Whether this IFileServiceConfig is valid.</returns>
+        </member>
+        <member name="P:DotNetOpen.FileService.IFileServiceConfig.Rules">
+            <summary>
+            The rules container for this configuration.
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.FileService.IRule`1">
+            <summary>
+            A rule which defines whether a given file should be accepted or rejected.
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.FileService.IRule">
+            <summary>
+            A rule which defines whether a given file should be accepted or rejected.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.IRule.Name">
+            <summary>
+            Name of the rule
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.FileService.IRule.Execute(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.String)">
+            <summary>
+            Executes the rule which should throw an exception of type <see cref="!:TException"/>.
+            </summary>
+            <typeparam name="TException">The type of exception which would be thrown in case of failure.</typeparam>
+            <param name="fileServiceConfig">The file service config to validate against.</param>
+            <param name="inputStream">The stream which contains the file.</param>
+            <param name="fileType">The type of file.</param>
+            <param name="fileName">Name of the file (this might be null at times).</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.IRule.Execute(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.String)">
+            <summary>
+            Executes the rule which should throw an exception of type <see cref="!:TException"/>.
+            </summary>
+            <typeparam name="TException">The type of exception which would be thrown in case of failure.</typeparam>
+            <param name="fileServiceConfig">The file service config to validate against.</param>
+            <param name="inputBytes">The byte array which contains the file.</param>
+            <param name="fileType">The type of file.</param>
+            <param name="fileName">Name of the file (this might be null at times).</param>
+        </member>
+        <member name="P:DotNetOpen.FileService.IRuleContainer.Length">
+            <summary>
+            The number of rules in the container.
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.FileService.IRuleContainer.AddRule``1">
+            <summary>
+            Add a rule into the container.
+            </summary>
+            <param name="rule">The rule to be added.</param>
+            <exception cref="T:DotNetOpen.FileService.InvalidRuleException">Thrown when the rule is invalid.</exception>
+        </member>
+        <member name="M:DotNetOpen.FileService.IRuleContainer.ExecuteAllRules(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.String)">
+            <summary>
+            Executes all the rules in the container on the given file in accordance with the given <seealso cref="T:DotNetOpen.FileService.IFileServiceConfig"/>.
+            </summary>
+            <param name="fileServiceConfig">The <see cref="T:DotNetOpen.FileService.IFileService"/> against which the files should be validated.</param>
+            <param name="inputStream">The stream which contains the file.</param>
+            <param name="fileType">The type of file.</param>
+            <param name="fileName">The name of the file (This may be null at times).</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.IRuleContainer.ExecuteAllRules(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.String)">
+            <summary>
+            Executes all the rules in the container on the given file in accordance with the given <seealso cref="T:DotNetOpen.FileService.IFileServiceConfig"/>.
+            </summary>
+            <param name="fileServiceConfig">The <see cref="T:DotNetOpen.FileService.IFileService"/> against which the files should be validated.</param>
+            <param name="inputBytes">The byte array which contains the file.</param>
+            <param name="fileType">The type of file.</param>
+            <param name="fileName">The name of the file (This may be null at times).</param>
+        </member>
+    </members>
+</doc>

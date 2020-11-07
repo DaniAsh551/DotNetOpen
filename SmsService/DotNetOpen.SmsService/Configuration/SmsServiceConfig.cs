@@ -9,45 +9,25 @@ namespace DotNetOpen.Services.SmsService
     /// </summary>
     public class SmsServiceConfig : ISmsServiceConfig
     {
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string BaseUrl { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public HttpMethod RequestMethod { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public RequestContentType RequestContentType { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IDictionary<string, string> RequestParameters { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public int? CharacterLimit { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public virtual string UserName { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public virtual string Password { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public virtual string RecepientMask { get; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public virtual string MessageMask { get;}
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public Encoding Encoding { get; set; }
         ///// <summary>
         ///// Instantiate a new SmsServiceConfig

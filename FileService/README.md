@@ -1,6 +1,9 @@
 # DotNetOpen.FileService
 A library to manage files in an organized, efficient and simple manner.
 
+## Detailed Documentation
+[Documentation](/docs/DotNetOpen.FileService.md)
+
 # Classes
   ## FileService
 <p>The default <a href="https://github.com/DaniAsh551/DotNetOpen/blob/master/FileService/DotNetOpen.FileService.Abstractions/Interfaces/IFileService.cs">IFileService</a> implementation which is provided. Requires an instance of <a href="https://github.com/DaniAsh551/DotNetOpen/blob/master/FileService/DotNetOpen.FileService.Abstractions/Interfaces/IFileServiceConfig.cs">IFileServiceConfig</a> in order to work.</p>

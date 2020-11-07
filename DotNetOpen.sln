@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetOpen.FileService.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmsService", "SmsService", "{D969A612-BD3C-482B-B192-5837103040FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetOpen.Services.SmsService", "SmsService\DotNetOpen.SmsService\DotnetOpen.Services.SmsService.csproj", "{C90257C1-8F8B-4E96-AB0F-EFF6688AFCF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetOpen.Services.SmsService", "SmsService\DotNetOpen.SmsService\DotNetOpen.Services.SmsService.csproj", "{C90257C1-8F8B-4E96-AB0F-EFF6688AFCF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetOpen.Services.SmsService.Abstractions", "SmsService\DotNetOpen.Services.SmsService.Abstractions\DotNetOpen.Services.SmsService.Abstractions.csproj", "{3AD784DE-BCD7-49D7-8F2C-B1A07D559076}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetOpen.Services.SmsService.Abstractions", "SmsService\DotNetOpen.Services.SmsService.Abstractions\DotNetOpen.Services.SmsService.Abstractions.csproj", "{3AD784DE-BCD7-49D7-8F2C-B1A07D559076}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

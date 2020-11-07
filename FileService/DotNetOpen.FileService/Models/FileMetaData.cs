@@ -5,9 +5,7 @@ using System.Linq;
 
 namespace DotNetOpen.FileService
 {
-    /// <summary>
-    /// <inheritdoc />
-    /// </summary>
+    /// <inheritdoc/>
     public class FileMetaData : IFileMetaData
     {
         /// <summary>
@@ -140,60 +138,36 @@ namespace DotNetOpen.FileService
         public FileMetaData()
         {
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public bool Exists => File.Exists(this.AbsolutePath);
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public long RawFileSize { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string FileName { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string FileType { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string Root { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string AbsolutePath => !string.IsNullOrWhiteSpace(Root) && !string.IsNullOrWhiteSpace(FileName) && !string.IsNullOrWhiteSpace(FileType) ?  Root + Path.DirectorySeparatorChar + FileType + Path.DirectorySeparatorChar + FileName : null;
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public DateTime CreatedTime { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public DateTime LastAccessTime { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public DateTime LastModifiedTime { get; internal set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public double GetFileSize(FileSizeUnit fileSizeUnit = FileSizeUnit.Byte)
         {
             double power = ((int)fileSizeUnit);
             double divisor = Math.Pow(1024.0d, power);
             return RawFileSize/divisor;
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public Stream GetStream(FileAccess fileAccess = FileAccess.Read)
             => new FileStream(AbsolutePath, FileMode.Open, fileAccess);
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public void RefreshFileInfo()
         {
             SetFileInfo();

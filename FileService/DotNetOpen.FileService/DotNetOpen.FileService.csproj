@@ -27,6 +27,10 @@ Changelog v3.0.0
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Dani\source\repos\DotNetOpen\FileService\DotNetOpen.FileService\DotNetOpen.FileService.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\DotNetOpen.FileService.Abstractions\DotNetOpen.FileService.Abstractions.csproj" />
   </ItemGroup>

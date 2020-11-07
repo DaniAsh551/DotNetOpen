@@ -73,13 +73,9 @@ namespace DotNetOpen.Services.SmsService.Configuration
 
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public override string RecepientMask => "to";
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public override string MessageMask => "text";
     }
 }

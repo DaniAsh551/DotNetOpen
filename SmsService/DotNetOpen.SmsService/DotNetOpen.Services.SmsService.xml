@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DotNetOpen.Services.SmsService</name>
+    </assembly>
+    <members>
+        <member name="T:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig">
+            <summary>
+            The Dhiraagu SMS service configuration
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig.#ctor(System.String,System.String)">
+            <summary>
+            Create a new instance of Dhiraagu config
+            </summary>
+            <param name="userid">userid form Dhiraagu</param>
+            <param name="password">password from Dhiraagu</param>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig.#ctor">
+            <summary>
+            Create a new instance of Dhiraagu config
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig.UserName">
+            <summary>
+            Dhiraagu userid
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig.Password">
+            <summary>
+            Dhiraagu password
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig.RecepientMask">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.DhiraaguConfig.MessageMask">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.Configuration.NexmoConfig">
+            <summary>
+            The Dhiraagu SMS service configuration
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.NexmoConfig.UserName">
+            <summary>
+            API Key from Nexmo
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.NexmoConfig.Password">
+            <summary>
+            API Secret from Nexmo
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Configuration.NexmoConfig.From">
+            <summary>
+            Indicates where the message came from
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.SmsServiceConfig">
+            <summary>
+            The configuration to be used within the SMS Service
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.BaseUrl">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.RequestMethod">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.RequestContentType">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.RequestParameters">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.CharacterLimit">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.UserName">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.Password">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.RecepientMask">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.MessageMask">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsServiceConfig.Encoding">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsServiceConfig.#ctor">
+            <summary>
+            Instantiate a new SmsServiceConfig
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.BulkSms">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.BulkSms.Recepients">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.BulkSms.Message">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.BulkSms.IsValid(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.Sms">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Sms.Recepient">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.Sms.Message">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.Sms.IsValid(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.SmsService">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsService.SendBulkSms(DotNetOpen.Services.SmsService.IBulkSms)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsService.SendBulkSmsAsync(DotNetOpen.Services.SmsService.IBulkSms)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsService.SendSms(DotNetOpen.Services.SmsService.ISms)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsService.SendSmsAsync(DotNetOpen.Services.SmsService.ISms)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsService.SetConfig(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.SmsServiceConfigProvider">
+            <summary>
+            Provides a set of pre-configured SMS Provider Configurations for in use within the SMS Service
+            </summary>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsServiceConfigProvider.GetDhiraaguConfig(System.String,System.String)">
+            <summary>
+            Get a configuration for Dhiraagu
+            </summary>
+            <param name="userid">userid from Dhiraagu</param>
+            <param name="password">password from Dhiraagu</param>
+            <returns>new DhiraaguConfig</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsServiceConfigProvider.GetNexmoConfig(System.String,System.String)">
+            <summary>
+            Get a configuration for Nexmo
+            </summary>
+            <param name="api_key">api_key from Nexmo</param>
+            <param name="api_secret">api-secret from Nexmo</param>
+            <returns>new NexmoConfig</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsServiceConfigProvider.GetNexmoConfig(System.String,System.String,System.String)">
+            <summary>
+            Get a configuration for Nexmo
+            </summary>
+            <param name="api_key">api_key from Nexmo</param>
+            <param name="api_secret">api-secret from Nexmo</param>
+            <param name="from">Define who sent the SMS</param>
+            <returns>new NexmoConfig</returns>
+        </member>
+    </members>
+</doc>

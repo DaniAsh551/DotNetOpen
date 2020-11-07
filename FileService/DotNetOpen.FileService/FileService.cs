@@ -7,9 +7,7 @@ using DotNetOpen.FileService.Configuration;
 
 namespace DotNetOpen.FileService
 {
-    /// <summary>
-    /// <inheritdoc />
-    /// </summary>
+    /// <inheritdoc/>
     public class FileService : IFileService
     {
         private readonly IFileServiceConfig _fileServiceConfig;
@@ -31,9 +29,7 @@ namespace DotNetOpen.FileService
 
 
         #region Get
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData GetFile(string fileName, string fileType, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -48,9 +44,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData[] GetAllFiles(string fileType, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -64,9 +58,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData[] GetAllFiles(bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -83,9 +75,7 @@ namespace DotNetOpen.FileService
             }
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public long GetNoOfFiles(string fileType, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -99,9 +89,7 @@ namespace DotNetOpen.FileService
                 return 0;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
 
         public long GetNoOfFiles(bool throwOnException = true, bool throwOnNotFound = true)
         {
@@ -120,9 +108,7 @@ namespace DotNetOpen.FileService
         #endregion
 
         #region Create
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData Create(string fileType, byte[] bytes, bool throwOnException = true)
         {
             try
@@ -145,9 +131,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IFileMetaData> CreateAsync(string fileType, byte[] bytes, bool throwOnException = true)
         {
             try
@@ -170,9 +154,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData Create(string fileName, string fileType, byte[] bytes, bool throwOnException = true)
         {
             try
@@ -195,9 +177,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IFileMetaData> CreateAsync(string fileName, string fileType, byte[] bytes, bool throwOnException = true)
         {
             try
@@ -220,9 +200,7 @@ namespace DotNetOpen.FileService
             }
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData Create(string fileType, Stream stream, bool throwOnException = true)
         {
             try
@@ -239,9 +217,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IFileMetaData> CreateAsync(string fileType, Stream stream, bool throwOnException = true)
         {
             try
@@ -258,9 +234,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData Create(string fileName, string fileType, Stream stream, bool throwOnException = true)
         {
             try
@@ -276,9 +250,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IFileMetaData> CreateAsync(string fileName, string fileType, Stream stream, bool throwOnException = true)
         {
             try
@@ -298,9 +270,7 @@ namespace DotNetOpen.FileService
 
 
         #region Update
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData Update(string fileName, string fileType, byte[] bytes, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -318,9 +288,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IFileMetaData> UpdateAsync(string fileName, string fileType, byte[] bytes, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -339,9 +307,7 @@ namespace DotNetOpen.FileService
             }
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IFileMetaData Update(string fileName, string fileType, Stream stream, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -360,9 +326,7 @@ namespace DotNetOpen.FileService
                 return null;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IFileMetaData> UpdateAsync(string fileName, string fileType, Stream stream, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -385,9 +349,7 @@ namespace DotNetOpen.FileService
 
 
         #region Move
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary> 
+        /// <inheritdoc/> 
         public IFileMetaData Move(string fileName, string oldFileType, string newFileType, bool throwOnException = true, bool throwOnNotFound = true)
         {
             try
@@ -435,9 +397,7 @@ namespace DotNetOpen.FileService
         #endregion
 
         #region Delete
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public void Delete(string fileName, string fileType, bool throwOnException = true, bool throwOnNotFound = false)
         {
             try
@@ -461,9 +421,7 @@ namespace DotNetOpen.FileService
             }
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task DeleteAsync(string fileName, string fileType, bool throwOnException = true, bool throwOnNotFound = false)
         {
             try

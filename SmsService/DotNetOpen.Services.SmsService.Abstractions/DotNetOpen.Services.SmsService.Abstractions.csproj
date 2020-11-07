@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Dani (d4n1.551)</Authors>
+    <Company>Dani (d4n1.551)</Company>
+    <Product>DotNetOpen.Services.SmsService.Abstractions</Product>
+    <Description>A library to send SMS in an organized, efficient and simple manner.</Description>
+    <PackageProjectUrl>https://github.com/DaniAsh551/DotNetOpen</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/DaniAsh551/DotNetOpen</PackageIconUrl>
+    <RepositoryUrl>https://github.com/DaniAsh551/DotNetOpen</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>DotNetOpen,Sms,Bulk Sms,SMS,Bulk SMS,BulkSms</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Dani\source\repos\DotNetOpen\SmsService\DotNetOpen.Services.SmsService.Abstractions\DotNetOpen.Services.SmsService.Abstractions.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

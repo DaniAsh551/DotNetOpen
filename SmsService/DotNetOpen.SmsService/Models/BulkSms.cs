@@ -3,22 +3,14 @@ using System.Linq;
 
 namespace DotNetOpen.Services.SmsService
 {
-    /// <summary>
-    /// <inheritdoc />
-    /// </summary>
+    /// <inheritdoc/>
     public class BulkSms : IBulkSms
     {
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<string> Recepients { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string Message { get; set; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsValid(ISmsServiceConfig smsServiceConfig)
         {
             return (Recepients?.Any() ?? false) && (Recepients?.All(x => !string.IsNullOrWhiteSpace(x)) ?? false) && (smsServiceConfig?.CharacterLimit.HasValue ?? false ? Message.Length <= smsServiceConfig?.CharacterLimit : true);

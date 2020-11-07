@@ -10,9 +10,7 @@ using Newtonsoft.Json;
 
 namespace DotNetOpen.Services.SmsService
 {
-    /// <summary>
-    /// <inheritdoc />
-    /// </summary>
+    /// <inheritdoc/>
     public class SmsService : ISmsService
     {
         private ISmsServiceConfig _smsServiceConfig;
@@ -41,9 +39,7 @@ namespace DotNetOpen.Services.SmsService
         }
 
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<string> SendBulkSms(IBulkSms bulkSms)
         {
             if (bulkSms == null) return null;
@@ -62,9 +58,7 @@ namespace DotNetOpen.Services.SmsService
             return successList;
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<IEnumerable<string>> SendBulkSmsAsync(IBulkSms bulkSms)
         {
             if (bulkSms == null) return null;
@@ -83,9 +77,7 @@ namespace DotNetOpen.Services.SmsService
             return successList;
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public bool SendSms(ISms sms)
         {
             try
@@ -140,9 +132,7 @@ namespace DotNetOpen.Services.SmsService
             }
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<bool> SendSmsAsync(ISms sms)
         {
             try
@@ -196,9 +186,7 @@ namespace DotNetOpen.Services.SmsService
                 return false;
             }
         }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public void SetConfig(ISmsServiceConfig smsServiceConfig)
         {
             this._smsServiceConfig = smsServiceConfig;

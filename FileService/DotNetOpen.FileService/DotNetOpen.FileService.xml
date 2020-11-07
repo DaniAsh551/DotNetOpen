@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DotNetOpen.FileService</name>
+    </assembly>
+    <members>
+        <member name="T:DotNetOpen.FileService.FileServiceConfig">
+            <summary>
+            The default <see cref="T:DotNetOpen.FileService.IFileServiceConfig"/>.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileServiceConfig.MaxUploadSize">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileServiceConfig.FileSizeUnit">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileServiceConfig.RootDirectory">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileServiceConfig.AllowedExtensions">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileServiceConfig.GetMimeType">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileServiceConfig.Rules">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetOpen.FileService.FileServiceConfig.IsValid">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.FileService.FileService">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.#ctor(DotNetOpen.FileService.IFileServiceConfig)">
+            <summary>
+            The configuration for a File Handler / Service
+            </summary>
+            <param name="fileServiceConfig">The configuration to be used</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.GetFile(System.String,System.String,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.GetAllFiles(System.String,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.GetAllFiles(System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.GetNoOfFiles(System.String,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.GetNoOfFiles(System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Create(System.String,System.Byte[],System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.CreateAsync(System.String,System.Byte[],System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Create(System.String,System.String,System.Byte[],System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.CreateAsync(System.String,System.String,System.Byte[],System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Create(System.String,System.IO.Stream,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.CreateAsync(System.String,System.IO.Stream,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Create(System.String,System.String,System.IO.Stream,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.CreateAsync(System.String,System.String,System.IO.Stream,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Update(System.String,System.String,System.Byte[],System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.UpdateAsync(System.String,System.String,System.Byte[],System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Update(System.String,System.String,System.IO.Stream,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.UpdateAsync(System.String,System.String,System.IO.Stream,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Move(System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <inheritdoc/> 
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.Delete(System.String,System.String,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileService.DeleteAsync(System.String,System.String,System.Boolean,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.FileService.FileExtensionValidationRule">
+            <summary>
+            Enforces file name extensions on the files.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileExtensionValidationRule.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileExtensionValidationRule.Execute(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileExtensionValidationRule.Execute(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.FileService.FileMetaData">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.#ctor(DotNetOpen.FileService.IFileServiceConfig,System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Generate file meta data from a file on the filesystem
+            </summary>
+            <param name="fileName">The Name of the file on the FileSystem in the Root Directory (Including extension)</param>
+            <param name="fileType">The type of the File</param>
+            <param name="fileServiceConfig">Associated File Handler's Configuration</param>
+            <param name="throwOnNotFound">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.#ctor(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Generate file metadata from bytes by writing it on to the FileSystem
+            </summary>
+            <param name="fileServiceConfig">>Associated File Handler's Configuration</param>
+            <param name="bytes">The bytes of the file</param>
+            <param name="fileType">The Extension of the file (without '.'). eg:zip</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.#ctor(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Generate file metadata from bytes by writing it on to the FileSystem
+            </summary>
+            <param name="fileServiceConfig">>Associated File Handler's Configuration</param>
+            <param name="bytes">The bytes of the file</param>
+            <param name="fileName">The Name of the file on the FileSystem in the Root Directory (Including extension)</param>
+            <param name="fileType">The Extension of the file (without '.'). eg:zip</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.#ctor(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Generate file metadata from bytes by writing it on to the FileSystem
+            </summary>
+            <param name="fileServiceConfig">>Associated File Handler's Configuration</param>
+            <param name="stream">The stream of the file</param>
+            <param name="fileType">The Extension of the file (without '.'). eg:zip</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.#ctor(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Generate file metadata from bytes by writing it on to the FileSystem
+            </summary>
+            <param name="fileServiceConfig">>Associated File Handler's Configuration</param>
+            <param name="stream">The stream of the file</param>
+            <param name="fileName">The Name of the file on the FileSystem in the Root Directory (Including extension)</param>
+            <param name="fileType">The Extension of the file (without '.'). eg:zip</param>
+            <param name="throwOnException">Indicates whether an Exception should be thrown when the file is not found. Default: true</param>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.#ctor">
+            <summary>
+            Create a new FileData object
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.Exists">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.RawFileSize">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.FileName">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.FileType">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.Root">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.AbsolutePath">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.CreatedTime">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.LastAccessTime">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileMetaData.LastModifiedTime">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.GetFileSize(DotNetOpen.FileService.Configuration.FileSizeUnit)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.GetStream(System.IO.FileAccess)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.RefreshFileInfo">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileMetaData.SetFileInfo">
+            <summary>
+            Gets the Information about the file from the filesystem.
+            </summary>
+        </member>
+        <member name="T:DotNetOpen.FileService.FileSizeLimitRule">
+            <summary>
+            A rule which enforces the filesize limits.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.FileSizeLimitRule.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileSizeLimitRule.Execute(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.FileSizeLimitRule.Execute(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.FileService.RuleContainer">
+            <summary>
+            The default rule container.
+            </summary>
+        </member>
+        <member name="P:DotNetOpen.FileService.RuleContainer.Length">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.AddRule``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.ExecuteAllRules(DotNetOpen.FileService.IFileServiceConfig,System.IO.Stream,System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.ExecuteAllRules(DotNetOpen.FileService.IFileServiceConfig,System.Byte[],System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.System#Collections#Generic#IEnumerable{DotNetOpen#FileService#IRule}#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.FileService.RuleContainer.ToString">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

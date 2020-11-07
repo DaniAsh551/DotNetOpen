@@ -42,33 +42,21 @@ namespace DotNetOpen.FileService
             AllowedExtensions = allowedExtensions;
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public double MaxUploadSize { get; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public FileSizeUnit FileSizeUnit { get; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string RootDirectory { get; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public string[] AllowedExtensions { get; }
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public MimeTypeHelper.GetMimeTypeDelegate GetMimeType { get; }
 
         /// <inheritdoc />
         public IRuleContainer Rules { get; }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsValid()
             => Rules != null && Rules.Length > 1 && GetMimeType != null && MaxUploadSize > 0 && !string.IsNullOrWhiteSpace(RootDirectory) && Directory.Exists(RootDirectory) && (AllowedExtensions?.Length ?? 0) > 0;
     }
