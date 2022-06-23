@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using System.Collections.Specialized;
 using Newtonsoft.Json;
 using System.Web;
@@ -86,7 +85,7 @@ namespace DotNetOpen.Services.SmsService
                 var paramDict = new Dictionary<string, string>();
                 paramDict.Add(_smsServiceConfig.MessageMask, sms.Message);
                 paramDict.Add(_smsServiceConfig.RecepientMask, sms.Recepient);
-                _smsServiceConfig?.RequestParameters?.ToList()?.ForEach(x => paramDict.TryAdd(x.Key, x.Value));
+                _smsServiceConfig?.RequestParameters?.ToList()?.ForEach(x => paramDict?.Add(x.Key, x.Value));
                 HttpWebRequest request = null;
                 string postData = null;
                 byte[] postBytes = null;
@@ -142,7 +141,7 @@ namespace DotNetOpen.Services.SmsService
                 var paramDict = new Dictionary<string, string>();
                 paramDict.Add(_smsServiceConfig.MessageMask, sms.Message);
                 paramDict.Add(_smsServiceConfig.RecepientMask, sms.Recepient);
-                _smsServiceConfig?.RequestParameters?.ToList()?.ForEach(x => paramDict.TryAdd(x.Key, x.Value));
+                _smsServiceConfig?.RequestParameters?.ToList()?.ForEach(x => paramDict?.Add(x.Key, x.Value));
                 HttpWebRequest request = null;
                 string postData = null;
                 byte[] postBytes = null;
