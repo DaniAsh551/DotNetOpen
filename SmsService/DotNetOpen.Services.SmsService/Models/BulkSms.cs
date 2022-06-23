@@ -7,6 +7,8 @@ namespace DotNetOpen.Services.SmsService
     public class BulkSms : IBulkSms
     {
         /// <inheritdoc/>
+        public string From { get; set; }
+        /// <inheritdoc/>
         public IEnumerable<string> Recepients { get; set; }
         /// <inheritdoc/>
         public string Message { get; set; }

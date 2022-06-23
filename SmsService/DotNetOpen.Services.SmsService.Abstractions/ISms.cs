@@ -6,6 +6,10 @@
     public interface ISms
     {
         /// <summary>
+        /// The Name of the SMS's sender
+        /// </summary>
+        string From { get; set; }
+        /// <summary>
         /// The recepient of the SMS
         /// </summary>
         string Recepient { get; set; }

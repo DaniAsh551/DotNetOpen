@@ -7,6 +7,10 @@ namespace DotNetOpen.Services.SmsService
     /// </summary>
     public interface IBulkSms
     {
+         /// <summary>
+        /// The Name of the SMS's sender
+        /// </summary>
+        string From { get; set; }
         /// <summary>
         /// The recepients of the SMS
         /// </summary>

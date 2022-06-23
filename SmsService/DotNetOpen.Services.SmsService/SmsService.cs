@@ -5,8 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using System.Collections.Specialized;
-using System.Web;
 using Newtonsoft.Json;
+using System.Web;
 
 namespace DotNetOpen.Services.SmsService
 {
@@ -15,15 +15,9 @@ namespace DotNetOpen.Services.SmsService
     {
         private ISmsServiceConfig _smsServiceConfig;
 
-        public SmsService(IOptions<SmsServiceConfig> smsServiceConfig)
+        public SmsService(ISmsServiceConfig smsServiceConfig)
         {
             if (smsServiceConfig == null) throw new ApplicationException("SMS service configuration was not found!");
-            _smsServiceConfig = smsServiceConfig?.Value;
-            ValidateConfiguration();
-        }
-
-        public SmsService(SmsServiceConfig smsServiceConfig)
-        {
             _smsServiceConfig = smsServiceConfig;
             ValidateConfiguration();
         }
@@ -40,49 +34,55 @@ namespace DotNetOpen.Services.SmsService
 
 
         /// <inheritdoc/>
-        public IEnumerable<string> SendBulkSms(IBulkSms bulkSms)
+        public IEnumerable<ISmsSendResult> SendBulkSms(IBulkSms bulkSms)
         {
             if (bulkSms == null) return null;
-            List<string> successList = new List<string>();
-            var smses = bulkSms.Recepients?.Select(x => new Sms() { Message = bulkSms.Message, Recepient = x})?.ToArray();
+            var statusList = new List<ISmsSendResult>();
+            var smses = bulkSms.Recepients?.Select(x => new Sms() { Message = bulkSms.Message, Recepient = x, From = bulkSms.From })?.ToArray();
             foreach (var sms in smses)
             {
                 try
                 {
-                    if (SendSms(sms)) successList.Add(sms.Recepient);
+                    var status = SendSms(sms);
+                    statusList.Add(status);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    statusList.Add(new SmsSendResult(sms.Recepient, e.Message));
                 }
             }
-            return successList;
+            return statusList;
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<string>> SendBulkSmsAsync(IBulkSms bulkSms)
+        public async Task<IEnumerable<ISmsSendResult>> SendBulkSmsAsync(IBulkSms bulkSms)
         {
             if (bulkSms == null) return null;
-            List<string> successList = new List<string>();
-            var smses = bulkSms.Recepients?.Select(x => new Sms() { Message = bulkSms.Message, Recepient = x })?.ToArray();
+            var statusList = new List<ISmsSendResult>();
+            var smses = bulkSms.Recepients?.Select(x => new Sms() { Message = bulkSms.Message, Recepient = x, From = bulkSms.From })?.ToArray();
             foreach (var sms in smses)
             {
                 try
                 {
-                    if (await SendSmsAsync(sms)) successList.Add(sms.Recepient);
+                    var status = await SendSmsAsync(sms);
+                    statusList.Add(status);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    statusList.Add(new SmsSendResult(sms.Recepient, e.Message));
                 }
             }
-            return successList;
+            return statusList;
         }
 
         /// <inheritdoc/>
-        public bool SendSms(ISms sms)
+        public ISmsSendResult SendSms(ISms sms)
         {
             try
             {
-                if (!sms?.IsValid(_smsServiceConfig) ?? true) return false;
+                if (!sms?.IsValid(_smsServiceConfig) ?? true)
+                    throw new Exception("Invalid SMS request.");
+
                 var paramDict = new Dictionary<string, string>();
                 paramDict.Add(_smsServiceConfig.MessageMask, sms.Message);
                 paramDict.Add(_smsServiceConfig.RecepientMask, sms.Recepient);
@@ -124,20 +124,21 @@ namespace DotNetOpen.Services.SmsService
                 }
 
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                return response.StatusCode == HttpStatusCode.OK;
+                return new SmsSendResult(sms.Recepient, response.StatusCode, response.GetResponseStream());
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                return new SmsSendResult(sms.Recepient, e.Message);
             }
         }
 
         /// <inheritdoc/>
-        public async Task<bool> SendSmsAsync(ISms sms)
+        public async Task<ISmsSendResult> SendSmsAsync(ISms sms)
         {
             try
             {
-                if (!sms?.IsValid(_smsServiceConfig) ?? true) return false;
+                if (!sms?.IsValid(_smsServiceConfig) ?? true)
+                    throw new Exception("Invalid SMS request.");
                 var paramDict = new Dictionary<string, string>();
                 paramDict.Add(_smsServiceConfig.MessageMask, sms.Message);
                 paramDict.Add(_smsServiceConfig.RecepientMask, sms.Recepient);
@@ -178,12 +179,12 @@ namespace DotNetOpen.Services.SmsService
                     }
                 }
                 
-                HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
-                return response.StatusCode == HttpStatusCode.OK;
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                return new SmsSendResult(sms.Recepient, response.StatusCode, response.GetResponseStream());
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return false;
+                return new SmsSendResult(sms.Recepient, e.Message);
             }
         }
         /// <inheritdoc/>
