@@ -100,6 +100,9 @@
         <member name="T:DotNetOpen.Services.SmsService.BulkSms">
             <inheritdoc/>
         </member>
+        <member name="P:DotNetOpen.Services.SmsService.BulkSms.From">
+            <inheritdoc/>
+        </member>
         <member name="P:DotNetOpen.Services.SmsService.BulkSms.Recepients">
             <inheritdoc/>
         </member>
@@ -112,6 +115,9 @@
         <member name="T:DotNetOpen.Services.SmsService.Sms">
             <inheritdoc/>
         </member>
+        <member name="P:DotNetOpen.Services.SmsService.Sms.From">
+            <inheritdoc/>
+        </member>
         <member name="P:DotNetOpen.Services.SmsService.Sms.Recepient">
             <inheritdoc/>
         </member>
@@ -119,6 +125,52 @@
             <inheritdoc/>
         </member>
         <member name="M:DotNetOpen.Services.SmsService.Sms.IsValid(DotNetOpen.Services.SmsService.ISmsServiceConfig)">
+            <inheritdoc/>
+        </member>
+        <member name="T:DotNetOpen.Services.SmsService.SmsSendResult">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsSendResult.ParseAsync(System.String,System.Net.HttpWebResponse)">
+            <summary>
+            Create a SmsSendResult object asynchronously.
+            </summary>
+            <param name="recepient">Recepient of the SMS.</param>
+            <param name="response">Response from SMS provider.</param>
+            <returns cref="T:DotNetOpen.Services.SmsService.SmsSendResult">SmsSendResult</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsSendResult.#ctor(System.String,System.Net.HttpWebResponse)">
+            <summary>
+            Create a SmsSendResult object.
+            </summary>
+            <param name="recepient">Recepient of the SMS.</param>
+            <param name="response">Response from SMS provider.</param>
+            <returns cref="T:DotNetOpen.Services.SmsService.SmsSendResult">SmsSendResult</returns>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsSendResult.#ctor(System.String,System.Net.HttpStatusCode,System.IO.Stream)">
+            <summary>
+            Create a SmsSendResult object asynchronously.
+            </summary>
+            <param name="recepient">Recepient of the SMS.</param>
+            <param name="responseCode">HTTP response code from SMS provider.</param>
+            <param name="responseStream">HTTP response content from SMS provider.</param>
+            <returns cref="T:DotNetOpen.Services.SmsService.SmsSendResult">SmsSendResult</returns>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsSendResult.Recepient">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsSendResult.IsSuccess">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsSendResult.ResponseCode">
+            <inheritdoc/>
+        </member>
+        <member name="P:DotNetOpen.Services.SmsService.SmsSendResult.ResponseStream">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsSendResult.GetResponseString(System.Text.Encoding)">
+            <inheritdoc/>
+        </member>
+        <member name="M:DotNetOpen.Services.SmsService.SmsSendResult.GetResponseStringAsync(System.Text.Encoding)">
             <inheritdoc/>
         </member>
         <member name="T:DotNetOpen.Services.SmsService.SmsService">
