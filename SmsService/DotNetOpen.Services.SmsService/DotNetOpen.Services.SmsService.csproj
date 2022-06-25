@@ -8,19 +8,24 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>DotNetOpen.Services.SmsService</PackageId>
+    <Version>2.0.0</Version>
     <RootNamespace>DotNetOpen.Services.SmsService</RootNamespace>
     <AssemblyName>DotNetOpen.Services.SmsService</AssemblyName>
     <Authors>Dani (d4n1.551)</Authors>
     <Company>Dani (d4n1.551)</Company>
     <Product>Dani (d4n1.551)</Product>
     <PackageId>DotNetOpen.Services.SmsService</PackageId>
+    <Title>DotNetOpen SmsService Abstractions</Title>
     <Description>A library to send SMS in an organized, efficient and simple manner.</Description>
     <PackageProjectUrl>https://github.com/DaniAsh551/DotNetOpen</PackageProjectUrl>
     <PackageIconUrl>https://github.com/DaniAsh551/DotNetOpen</PackageIconUrl>
     <RepositoryUrl>https://github.com/DaniAsh551/DotNetOpen</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>DotNetOpen,Sms,Bulk Sms,SMS,Bulk SMS,BulkSms</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -28,8 +33,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
@@ -38,6 +41,8 @@
     <ProjectReference Include="..\DotNetOpen.Services.SmsService.Abstractions\DotNetOpen.Services.SmsService.Abstractions.csproj" />
   </ItemGroup>
 
-  
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>

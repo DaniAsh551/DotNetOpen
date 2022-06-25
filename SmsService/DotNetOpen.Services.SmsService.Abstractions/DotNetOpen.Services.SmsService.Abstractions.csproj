@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>DotNetOpen.Services.SmsService.Abstractions</PackageId>
+    <Title>DotNetOpen SmsService Abstractions</Title>
+    <Version>2.0.0</Version>
     <Authors>Dani (d4n1.551)</Authors>
     <Company>Dani (d4n1.551)</Company>
     <Product>DotNetOpen.Services.SmsService.Abstractions</Product>
@@ -11,10 +14,16 @@
     <RepositoryUrl>https://github.com/DaniAsh551/DotNetOpen</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>DotNetOpen,Sms,Bulk Sms,SMS,Bulk SMS,BulkSms</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Users\Dani\source\repos\DotNetOpen\SmsService\DotNetOpen.Services.SmsService.Abstractions\DotNetOpen.Services.SmsService.Abstractions.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>
